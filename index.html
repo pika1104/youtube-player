@@ -2,87 +2,30 @@
 <html lang="ja">
 <head>
   <meta charset="UTF-8">
-  <title>This Is Me - YouTube Player</title>
+  <title>限定動画</title>
   <style>
     body {
-      background: #000;
-      color: white;
-      text-align: center;
-      font-family: Arial;
-      margin-top: 50px;
+      margin: 0;
+      background: black;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      height: 100vh;
     }
-    #player {
-      pointer-events: none; /* 操作禁止 */
-    }
-    button {
-      margin-top: 20px;
-      font-size: 20px;
-      padding: 10px 20px;
-      background: #ff4081;
+    iframe {
+      width: 90%;
+      max-width: 900px;
+      height: 500px;
       border: none;
-      color: white;
-      cursor: pointer;
-      border-radius: 10px;
     }
   </style>
 </head>
 <body>
 
-<h1>This Is Me</h1>
-
-<div id="player"></div>
-
-<button onclick="start()">再生</button>
-
-<script src="https://www.youtube.com/iframe_api"></script>
-<script>
-  let player;
-
-  function onYouTubeIframeAPIReady() {
-    player = new YT.Player('player', {
-      height: '360',
-      width: '640',
-      videoId: 'CjxugyZCfuw', // This Is Me（公式系）
-      playerVars: {
-        controls: 0, // UI非表示
-        disablekb: 1, // キーボード操作禁止
-        modestbranding: 1,
-        rel: 0
-      },
-      events: {
-        'onStateChange': onPlayerStateChange
-      }
-    });
-  }
-
-  function start() {
-    player.playVideo();
-  }
-
-  function onPlayerStateChange(event) {
-    // 一時停止されたら即再生
-    if (event.data === YT.PlayerState.PAUSED) {
-      player.playVideo();
-    }
-
-    // 終わったらループ
-    if (event.data === YT.PlayerState.ENDED) {
-      player.seekTo(0);
-      player.playVideo();
-    }
-  }
-
-  // 定期的に巻き戻してシーク防止
-  setInterval(() => {
-    if (player && player.getCurrentTime) {
-      const t = player.getCurrentTime();
-      if (t > 1 && player.getPlayerState() !== YT.PlayerState.PLAYING) {
-        player.seekTo(0);
-        player.playVideo();
-      }
-    }
-  }, 1000);
-</script>
+  <iframe
+    src="https://www.youtube.com/embed/CjxugyZCfuw?rel=0&modestbranding=1&controls=1&disablekb=1"
+    allowfullscreen>
+  </iframe>
 
 </body>
 </html>
